@@ -18,7 +18,18 @@ app.use(express.urlencoded({
 app.use(express.json())
 // rotas
 app.get('/', (requisicao, resposta) => {
-    resposta.render("home")
+    const sql = 'SELECT * FROM books'
+    conn.query(sql, (error, data) =>{
+        if (error) {
+            return console.log(error)
+        }
+        
+        const books = data
+
+        console.log(books)
+
+        resposta.render("home", {books})
+    })
 })
 
 // conexão com mysql
